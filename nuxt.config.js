@@ -1,0 +1,69 @@
+/* eslint-disable */
+const env = process.env.NODE_ENV
+console.log('env: ', env)
+
+module.exports = {
+  server: {
+    host: 'local.yuanfudao.biz'
+  },
+  target: 'server',
+  mode: 'universal',
+  telemetry: false,
+  buildDir: 'dist',
+  rootDir: __dirname,
+  head () {
+    return {
+      title: '题目渲染后台',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+      link: [{
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: 'favicon.ico'
+      }]
+    }
+  },
+
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: [
+    'element-ui/lib/theme-chalk/index.css',
+  ],
+
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [
+    { src: '~/plugins/logger.js', mode: 'server' }, '@/plugins/element-ui.js'
+  ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  // components: true,
+
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: [
+    // https://go.nuxtjs.dev/typescript
+    '@nuxt/typescript-build',
+  ],
+
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: [
+    // https://go.nuxtjs.dev/axios
+    '@nuxtjs/axios',
+  ],
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    credentials: true
+  },
+
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {
+    publicPath: env === 'test' ? '/.nuxt/' : '',
+    transpile: [/^element-ui/],
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+      ]
+    }
+  },
+}
